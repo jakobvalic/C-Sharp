@@ -10,10 +10,22 @@ namespace Ugibanje
     {
         static void Main(string[] args)
         {
+            KajNaredim();
             // PitonNaObisku();
-            Karo();
+            //Karo();
             // Boris();
             // Ugibanje();
+        }
+
+        static void KajNaredim()
+        {
+            int a = int.Parse(Console.ReadLine());
+            int b = int.Parse(Console.ReadLine());
+            int c = int.Parse(Console.ReadLine());
+            int racun1 = a + (b + c);
+            int racun2 = (a + b) + c;
+            string izpis = String.Format("Za števila {0}, {1} in {2} seveda velja {0}+({1}+{2})=({0}+{1})+{2}, saj je {3} = {4} .", a, b , c, racun1, racun2);
+            Console.WriteLine(izpis);
         }
 
         static void Karo()
