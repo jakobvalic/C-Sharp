@@ -1,0 +1,147 @@
+
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        //Kratek test
+        Vozilo opel = new Vozilo(0.01, 5, 10);
+        List<Postanek> postanki = preberiPostanke("postanki.txt");
+        System.out.println(opel.izvedljivostPoti(postanki));
+    }
+
+    /**
+     * Iz datoteke prebere seznam postankov. Vsaka vrstica je
+     * en postanek. Vrstice imajo obliko:
+     *   tip postanka,x_koordinata,y_koordinata (,tovor)
+     * Tipi postankov so garaza, dvig, dostava in bencinska (vse èrke male).
+     * Postanki tipa dvig in dostava imajo poleg koordinat še vrednost tovor,
+     * ki pove koliko tovora se tam dvigne/dostavi.
+     *
+     * Naloga.
+     * @param vhodnaDatoteka
+     * @return seznam postankov.
+     * @throws IOException
+     */
+    public static List<Postanek> preberiPostanke(String vhodnaDatoteka) throws IOException {
+        
+    	List<Postanek> postanki = new ArrayList<Postanek>();
+    	BufferedReader vhod = new BufferedReader(new FileReader(vhodnaDatoteka));
+    	while (vhod.ready()) {
+    		Postanek postanek = new Postanek(12, 2);
+    		
+    		String vrstica = vhod.readLine().trim();
+    		postanki.add(vrstica);
+    	}
+    	
+    	return postanki;
+    	
+    }
+}
+
+
+class Vozilo {
+
+    private int tovorMax;               // Maksimalna kolièina tovora v vozilu
+    private int tovorTrenutni;          // Trenutna kolièina tovora v vozilu
+    private double gorivoMax;           // Maksimalna kolièina goriva v vozilu
+    private double gorivoTrenutno;      // Trenutna kolièina goriva v vozilu
+    private double poraba;              // Poraba goriva na 100km
+
+    public Vozilo(double p, int k, double g) {
+        tovorMax = k;
+        tovorTrenutni = 0;
+        gorivoMax = g;
+        gorivoTrenutno = g;
+        poraba = p;
+    }
+
+    /**
+     * Spremeni kolièino tovora v vozilu. Èe je argument
+     * pozitiven, gre za nalaganje, èe negativen pa odlaganje.
+     */
+    public void spremeniTovor(int tovor) {
+        tovorTrenutni += tovor;
+    }
+
+    /**
+     * Vozilo napolni z gorivom.
+     */
+    public void natociGorivo() {
+        gorivoTrenutno = gorivoMax;
+    }
+
+    /**
+     * Avto prevozi pot med dvema postankoma.
+     * Izraèuna razdaljo med postankoma (evklidska, enote so km)
+     * in vozilu ustretno zmanjša kolièino goriva (glede na porabo).
+     * porabljenoGorivo = dolžina * poraba / 100
+     */
+    public void prevoziPot(Postanek p1, Postanek p2) {
+        // Dopolni funkcijo
+    }
+
+    /**
+     * Funkcija, ki preveri, ali lahko vozilo izvede dane postanke.
+     * @param postanki, ki jih mora vozilo opraviti
+     * @return ali jih lahko
+     */
+    public boolean izvedljivostPoti(List<Postanek> postanki) {
+        // Dopolni funkcijo
+    }
+}
+
+
+/**
+ * Razred za predstavitev vseh postankov.
+ */
+abstract class Postanek {
+    public double x;
+    public double y;
+    public abstract void posodobiVozilo(Vozilo v);
+
+    public Postanek(double x_koord, double y_koord) {
+        x = x_koord;
+        y = y_koord;
+    }
+}
+
+/**
+ * Definiraj razred Garaza, ki je podrazred razreda Postanek.
+ * V garaži se z vozilom ne zgodi niè.
+ */
+class Garaza extends Postanek {
+	
+}
+
+
+/**
+ * Definiraj razred Dvig, podrazred razreda Postanek.
+ * Poleg koordinat prejme naj ima še celoštevilsko polje tovor,
+ * podano ob njegovi konstrukciji. To je kolièina tovora, ki ga
+ * vozilo ob tem postanku naloži.
+ */
+class Dvig extends Postanek {
+}
+
+/**
+ * Definiraj razred Dostava, podrazred razreda Postanek.
+ * Poleg koordinat prejme naj ima še celoštevilsko polje tovor,
+ * podano ob njegovi konstrukciji. To je kolièina tovora, ki ga
+ * vozilo ob tem postanku odloži.
+ */
+class Dostava extends Postanek {
+}
+
+/**
+ * Definiraj razred Bencinska, podrazred razreda Postanek.
+ * Vozilo na tem postanku dotoèi gorivo do svoje kapacitete.
+ */
+class Bencinska extends Postanek {
+}
+
