@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6A9D687-0BBF-46BB-81C3-13A78953F61A}</ProjectGuid>
+    <ProjectGuid>{3DBBA93E-6C40-4202-8898-C219081C5497}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>JudgeDOM</RootNamespace>
-    <AssemblyName>JudgeDOM</AssemblyName>
+    <RootNamespace>Knjiznica</RootNamespace>
+    <AssemblyName>Knjiznica</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
