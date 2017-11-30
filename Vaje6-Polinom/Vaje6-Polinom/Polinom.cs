@@ -6,34 +6,43 @@ using System.Threading.Tasks;
 
 namespace Vaje6_Polinom
 {
-    class Polinom
+    partial class Polinom
     {
         private int[] Koeficienti;
 
-        public Polinom()
+        public Polinom() : this(new int[0])
         {
-            Koeficienti = new int[0];
         }
 
-        public Polinom(int a0)
+        public Polinom(int a0) : this(new int[] { a0 })
         {
-            Koeficienti = new int[] { a0 };
         }
 
-        public Polinom(int a0, int a1)
+        public Polinom(int a0, int a1) : this(new int[] { a0, a1 })
         {
-            Koeficienti = new int[] { a0, a1 };
         }
 
         public Polinom(int[] koef)
         {
             // Koeficienti = koef; // Tako ne smemo pisati, ker v tem primeru Koeficienti kažejo na koef
             Koeficienti = new int[koef.Length];
-            for (int i=0; i<koef.Length; i++)
+            Array.Copy(koef, Koeficienti, koef.Length);
+            PobrisiPrazneKoeficiente();
+        }
+
+        /// <summary>
+        /// Izbriše vse prazne koeficiente na koncu
+        /// </summary>
+        private void PobrisiPrazneKoeficiente()
+        {
+            while (Koeficienti.Length > 0 && Koeficienti[Koeficienti.Length - 1] == 0)
             {
-                Koeficienti[i] = koef[i];
+                // Izbrišemo zadnji koeficient, ki je 0
             }
         }
+
+
+
         
         /// <summary>
         /// Naredi kopijo polinoma p. Dostop do koeficientov preko metode Polinom.Koeficient(i).
@@ -63,15 +72,21 @@ namespace Vaje6_Polinom
             return Koeficienti[i];
         }
 
+        /// <summary>
+        /// Spremeni koeficient polinoma. Če tega koeficienta še ni, ga doda.
+        /// </summary>
+        /// <param name="i">Indeks koeficienta.</param>
+        /// <param name="a">Nova vrednost koeficienta.</param>
         public void NastaviKoeficient(int i, int a)
         {
             if (i > Koeficienti.Length) { 
-                int[] daljsaTab = new int[i]; // Ustvarimo daljšo tabelo
+                int[] daljsaTab = new int[i + 1]; // Ustvarimo daljšo tabelo
                 daljsaTab[i] = a;
                 for (int ind=0; ind<Koeficienti.Length; ind++) // Prepišemo ostale koeficiente
                 {
-                    daljsaTab[i] = Koeficienti[i];
+                    daljsaTab[ind] = Koeficienti[ind];
                 }
+                Koeficienti = daljsaTab; // Preusmerimo kazalec
             }
             else
             {
@@ -79,13 +94,18 @@ namespace Vaje6_Polinom
             }
         }
 
-        public int Stopnja()
+        public int Stopnja
         {
-            if (Koeficienti.Length == 0)
+            get
             {
-                return -1;
+                if (Koeficienti.Length == 0)
+                {
+                    return -1;
+                }
+                return Koeficienti.Length;
             }
-            return Koeficienti.Length;
+            set { }
+
         }
 
         public int Vrednost(int x)
@@ -124,17 +144,27 @@ namespace Vaje6_Polinom
             return new Polinom(koefVsote);
         }
 
+        /// <summary>
+        /// Pomnožimo koeficiente s faktorjem k.
+        /// </summary>
+        /// <param name="k">Faktor</param>
+        /// <returns></returns>
         public Polinom Produkt(int k)
         {
             int[] koefProdukta = new int[Koeficienti.Length];
-            for (int i=0; i<Koeficienti.Length; i++)
+            for (int i = 0; i < Koeficienti.Length; i++)
             {
                 koefProdukta[i] = Koeficienti[i] * k;
             }
             return new Polinom(koefProdukta);
         }
 
-        public Polinom Prodkut(Polinom p)
+        /// <summary>
+        /// Pomnožimo dva polinoma.
+        /// </summary>
+        /// <param name="p">Polinom, s katerim množimo.</param>
+        /// <returns></returns>
+        public Polinom Produkt(Polinom p)
         {
             int[] koefProdukta = new int[Stopnja() + p.Stopnja() + 1];
             for (int mesto=0; mesto<koefProdukta.Length; mesto++)

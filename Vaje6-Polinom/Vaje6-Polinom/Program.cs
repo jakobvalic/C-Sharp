@@ -10,6 +10,7 @@ namespace Vaje6_Polinom
     {
         static void Main(string[] args)
         {
+            PreveriPolinome();
         }
 
 
