@@ -12,7 +12,8 @@ namespace Datoteke
         static void Main(string[] args)
         {
             string pot = @"\\Spin\ValicJ15$\_System\Desktop\___\vnos1";
-            ZapisiIzpisi(pot);
+            string potDoma = @"C:\Users\Jakob\Desktop\palindrom\vaja5.txt";
+            ZapisiIzpisi(potDoma);
         }
 
         static void ZapisiIzpisi(String pot)
