@@ -16,7 +16,7 @@ namespace Naloga4_Vozilo
     /// <summary>
     /// Razred za hrambo podatkov o dosegu vozila.
     /// </summary>
-    public class Vozilo
+    public class Vozilo : IComparable<Vozilo>
     {
         private double gorivo; // Trenutna količina
         private double kapaciteta; // Volumen rezervoarja
@@ -33,7 +33,7 @@ namespace Naloga4_Vozilo
         {
             get // Lastnost samo za branje, ker nimamo set
             {
-                return (gorivo / poraba) * 100; 
+                return (gorivo / poraba) * 100; // Bolje: get => (gorivo / poraba) * 100
             }
         }
 
@@ -46,7 +46,7 @@ namespace Naloga4_Vozilo
         {
             if (dolzinaPoti <= PreostaliKilometri)
             {
-                gorivo -= dolzinaPoti / (poraba * 100);
+                gorivo -= poraba * dolzinaPoti / 100;
                 return true;
             }
             else
@@ -54,6 +54,19 @@ namespace Naloga4_Vozilo
                 gorivo = 0;
                 return false;
             }
+        }
+
+        public int CompareTo(Vozilo other)
+        {
+            double d = PreostaliKilometri - other.PreostaliKilometri;
+            if (d < 0) return -1;
+            else if (d > 0) return 1;
+            else return 0;
+        }
+
+        static void UrediPoDosegu(List<Vozilo> vozila)
+        {
+            vozila.Sort();
         }
     }
 }

@@ -47,5 +47,18 @@ namespace Naloga3
 
         }
 
+        // Raje napiši metodo jeDatum
+        static bool jeDatum(string vrstica)
+        {
+            DateTime t = new DateTime();
+            return DateTime.TryParseExact(vrstica, "dd. MM. yyyy", null, System.Globalization.DateTimeStyles.None, out t);
+        }
+
+        static bool jeDatumPoDomace(string vrstica)
+        {
+            string[] besede = vrstica.Split(new string[] { ". " }, StringSplitOptions.None);
+            // Preverjanje
+            return true;
+        }
     }
 }
