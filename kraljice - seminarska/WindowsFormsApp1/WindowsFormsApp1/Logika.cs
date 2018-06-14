@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
+
     public class MyEventArgs : EventArgs
     {
         public int[,] Sahovnica { get; private set; }
@@ -19,7 +20,22 @@ namespace WindowsFormsApp1
     public class Logika
     {
         public event EventHandler<MyEventArgs> PritisniGumbDodajKraljico;
-        
+
+        public List<int[,]> korakiPosamezneRešitve = new List<int[,]>(); // V ta seznam shranimo korake posamezne rešitve. 
+
+
+
+        public void PočistiKorakePosamezneRešitve()
+        {
+            if (korakiPosamezneRešitve.Count() > 0)
+            {
+                korakiPosamezneRešitve.Clear();
+                Console.Out.Write("Koraki posamezne rešitve izbrisani.");
+            }
+
+        }
+
+
         public void PokličiGrafiko(int[,] sahovnica)
         {
 
@@ -159,7 +175,8 @@ namespace WindowsFormsApp1
             int j_zadnje_kraljice = kraljica[1];
             if (i_zadnje_kraljice == (n - 1))
             {
-                Premakni_kraljico_za_eno_naprej(sahovnica);
+                korakiPosamezneRešitve.Add(sahovnica); // Shranimo
+                return Premakni_kraljico_za_eno_naprej(sahovnica);
             }
             for (int i = i_zadnje_kraljice + 1; i < n; i++)
             {
@@ -168,6 +185,7 @@ namespace WindowsFormsApp1
                     if (Dovoljeno_polje(sahovnica, new int[] { i, j })) // Dobili smo mesto, na katero lahko postavimo kraljico.
                     {
                         sahovnica[i, j] = 1;
+                        korakiPosamezneRešitve.Add(sahovnica);
                     }
                 }
                 // Če v trenutni vrstici nismo mogli postaviti kraljice, pokličemo funkcijo za premikanje kraljic.
@@ -226,6 +244,7 @@ namespace WindowsFormsApp1
                 if (Dovoljeno_polje(sahovnica, new int[] { i_zadnje_kraljice, j }))
                 {
                     sahovnica[i_zadnje_kraljice, j] = 1; // Dobili smo prosto polje, na katero lahko postavimo kraljico.
+                    korakiPosamezneRešitve.Add(sahovnica); // Shranimo
                     return Postavljaj_kraljice(sahovnica); // Postavljamo naprej kraljice.
                 }
 

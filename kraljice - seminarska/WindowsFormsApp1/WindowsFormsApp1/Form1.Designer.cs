@@ -39,6 +39,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.checkBoxUstavitev = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.checkBoxRaziščiRešitev = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -134,11 +137,43 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "PROBLEM OSMIH KRALJIC";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1195, 412);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(139, 41);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Razišči rešitev";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxRaziščiRešitev
+            // 
+            this.checkBoxRaziščiRešitev.AutoSize = true;
+            this.checkBoxRaziščiRešitev.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.checkBoxRaziščiRešitev.Location = new System.Drawing.Point(1195, 472);
+            this.checkBoxRaziščiRešitev.Name = "checkBoxRaziščiRešitev";
+            this.checkBoxRaziščiRešitev.Size = new System.Drawing.Size(158, 29);
+            this.checkBoxRaziščiRešitev.TabIndex = 11;
+            this.checkBoxRaziščiRešitev.Text = "Razišči rešitev";
+            this.checkBoxRaziščiRešitev.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(909, 535);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(159, 17);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Izpis posamezne rešitve";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 536);
+            this.ClientSize = new System.Drawing.Size(1398, 635);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.checkBoxRaziščiRešitev);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBoxUstavitev);
             this.Controls.Add(this.label3);
@@ -167,6 +202,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBoxUstavitev;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox checkBoxRaziščiRešitev;
+        private System.Windows.Forms.Label label5;
     }
 }
 

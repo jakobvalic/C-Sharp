@@ -181,6 +181,19 @@ namespace WindowsFormsApp1
         }
 
         /// <summary>
+        /// Funkcija, ki izriše korake posamezne rešitve.
+        /// </summary>
+        public void IzpišiPosameznoRešitev(List<int[,]> korakiRešitve)
+        {
+            label5.Text = String.Format("Korakov te posamezne rešitve je {0}", korakiRešitve.Count());
+            foreach (int[,] korak in korakiRešitve)
+            {
+                Console.Out.WriteLine("\n Naslednji korak: ");
+                logika.Izpisi_sahovnico(korak);
+            }
+        }
+
+        /// <summary>
         /// Naroči logiki, naj poišče naslednjo rešitev. 
         /// </summary>
         private void PoiščiEnoRešitev()
@@ -188,8 +201,19 @@ namespace WindowsFormsApp1
             SAHOVNICA = logika.Krovna_funkcija(SAHOVNICA);
             if (SAHOVNICA[0,0] != -1)
             {
-                OdstraniVseKraljice();
-                DodajVseKraljice(this, EventArgs.Empty, SAHOVNICA);
+                List<int[,]> korakiRešitve = logika.korakiPosamezneRešitve;
+                OdstraniVseKraljice(); // Pobrišemo slike kraljic s plošče.
+
+                if (checkBoxRaziščiRešitev.Checked)
+                {
+                    IzpišiPosameznoRešitev(korakiRešitve);
+                }
+                //logika.PočistiKorakePosamezneRešitve(); // Pobrišemo korake posamezne rešitve.
+
+
+                DodajVseKraljice(this, EventArgs.Empty, SAHOVNICA); // Dodamo kraljice rešitve
+
+                IzpišiPosameznoRešitev(korakiRešitve);
                 zaporednaRešitev++;
                 label2.Text = zaporednaRešitev.ToString(); // Zaporedna številka rešitve.
             } 
