@@ -9,6 +9,7 @@ namespace AbstraktniRazred
     class Program  {
         static void Main(string[] args)
         {
+            Lik katerikoliLik = new Lik();
             Trikotnik trikotnik = new Trikotnik();
             trikotnik.koordinate(12, 4);
             trikotnik.opisi();
