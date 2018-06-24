@@ -63,19 +63,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap kraljica_beli {
+        internal static System.Drawing.Bitmap kraljica_bela {
             get {
-                object obj = ResourceManager.GetObject("kraljica_beli", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap kraljica_beli1 {
-            get {
-                object obj = ResourceManager.GetObject("kraljica_beli1", resourceCulture);
+                object obj = ResourceManager.GetObject("kraljica_bela", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,16 +76,6 @@ namespace WindowsFormsApp1.Properties {
         internal static System.Drawing.Bitmap kraljica_rdeca {
             get {
                 object obj = ResourceManager.GetObject("kraljica_rdeca", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap kraljica_rdeca_gif {
-            get {
-                object obj = ResourceManager.GetObject("kraljica_rdeca_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

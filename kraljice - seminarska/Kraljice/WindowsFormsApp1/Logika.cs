@@ -233,6 +233,7 @@ namespace WindowsFormsApp1
         /// <returns>Šahovnico s premaknjeno kraljico.</returns>
         public int[,] Premakni_kraljico_za_eno_naprej(int[,] sahovnica)
         {
+            ShraniŠahovnico(sahovnica); // Preden premaknemo, shranimo ---24.6.
             int n = (int)Math.Sqrt(sahovnica.Length);
             int[] kraljica = Poisci_zadnjo_kraljico(sahovnica);
             int i_zadnje_kraljice = kraljica[0];
@@ -249,9 +250,9 @@ namespace WindowsFormsApp1
                 {
                     Console.Out.WriteLine("To je prejšnja šahovnica: ");
                     Izpisi_sahovnico(sahovnica);
-                    ShraniŠahovnico(sahovnica); // Shranimo
+                    //ShraniŠahovnico(sahovnica); // Shranimo
                     sahovnica[i_zadnje_kraljice, j] = 1; // Dobili smo prosto polje, na katero lahko postavimo kraljico.
-                    ShraniŠahovnico(sahovnica); // Shranimo kopijo šahovnice :)
+                    //ShraniŠahovnico(sahovnica); // Shranimo kopijo šahovnice :)
                     Console.Out.WriteLine("To je poznejša šahovnica, ki jo shranimo: ");
                     Izpisi_sahovnico(sahovnica);
                     return Postavljaj_kraljice(sahovnica); // Postavljamo naprej kraljice.
@@ -266,6 +267,8 @@ namespace WindowsFormsApp1
             }
             // Zanka se je iztekla in v vrstici nismo dobili polja, na katerega bi lahko postavili kraljico. 
             // Zato začnemo premikati kraljico, ki je v zgornji vrstici. 
+            //// Še prej shranimo šahovnico, da se premikanje v zgornji vrstici ne zgodi istočasno.
+            //ShraniŠahovnico(sahovnica);
             return Premakni_kraljico_za_eno_naprej(sahovnica);
         }
 

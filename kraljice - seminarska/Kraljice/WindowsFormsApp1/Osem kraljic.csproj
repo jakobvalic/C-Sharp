@@ -81,16 +81,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\kraljica_beli1.gif" />
+    <None Include="Resources\kraljica_bela.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\kraljica_beli1.png" />
+    <None Include="Resources\kraljica_bela.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\kraljica_rdeca.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\kraljica_rdeca_gif.gif" />
+    <None Include="Resources\kraljica_rdeci.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

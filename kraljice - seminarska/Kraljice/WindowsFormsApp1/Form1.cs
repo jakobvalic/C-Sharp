@@ -81,7 +81,7 @@ namespace WindowsFormsApp1
             Graphics g = e.Graphics;
             
             // Polja
-            using (Brush ČrnČopič = new SolidBrush(Color.Black))
+            using (Brush ČrnČopič = new SolidBrush(Color.Navy))
             using (Brush BelČopič = new SolidBrush(Color.White))
             {
                 for (int i = 1; i <= 8; i++)
@@ -148,11 +148,11 @@ namespace WindowsFormsApp1
             Image slika;
             if (rdečaKraljica)
             {
-                slika = Properties.Resources.kraljica_rdeca_gif;
+                slika = Properties.Resources.kraljica_rdeca;
             }
             else
             {
-                slika = Properties.Resources.kraljica_beli;
+                slika = Properties.Resources.kraljica_bela;
             }
 
             PictureBox okvirSlike = new PictureBox
