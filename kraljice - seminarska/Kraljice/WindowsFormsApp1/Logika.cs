@@ -7,69 +7,27 @@ using System.Threading.Tasks;
 namespace WindowsFormsApp1
 {
 
-    public class MyEventArgs : EventArgs
-    {
-        public int[,] Sahovnica { get; private set; }
-
-        public MyEventArgs(int[,] sahovnica) : base()
-        {
-            Sahovnica = sahovnica;
-        }
-    }
-
     public class Logika
     {
-        public event EventHandler<MyEventArgs> PritisniGumbDodajKraljico;
 
         public List<int[,]> korakiPosamezneRešitve = new List<int[,]>(); // V ta seznam shranimo korake posamezne rešitve. 
-
-        public void PočistiKorakePosamezneRešitve()
-        {
-            if (korakiPosamezneRešitve.Count() > 0)
-            {
-                korakiPosamezneRešitve.Clear();
-                Console.Out.Write("Koraki posamezne rešitve izbrisani.");
-            }
-
-        }
-
-        public void PokličiGrafiko(int[,] sahovnica)
-        {
-
-            EventHandler<MyEventArgs> rokovalec = PritisniGumbDodajKraljico;
-            if (rokovalec != null)
-            {
-                MyEventArgs parametri = new MyEventArgs(sahovnica);
-                rokovalec(this, parametri);
-            }
-        }
+        public List<int[,]> vseRešitve = new List<int[,]>();
 
         /// <summary>
-        /// Vrne šahovnico z rešitvijo.
-        /// </summary>
-        /// <param name="sahovnica">Začetno postavitev, s katere išče rešitve.</param>
-        /// <returns>Rešitev.</returns>
-        public int[,] Krovna_funkcija(int[,] sahovnica)
-        {
-            int[,] resitev = Postavljaj_kraljice(sahovnica);
-            return resitev;
-        }
-
-        /// <summary>
-        /// Izpiše vse rešitve v konzolo. 
+        /// Funkcija, ki poišče vse rešitve in jih izpiše v konzolo. 
         /// </summary>
         /// <param name="grafika"></param>
-        /// <param name="sahovnica0"></param>
-        public void Krovna_funkcija_konzola(int[,] sahovnica0)
+        /// <param name="sahovnica"></param>
+        public void Krovna_funkcija_konzola(int[,] sahovnica)
         {
 
             Boolean izpis = true;
 
-            for (int stevec_resitev = 1; stevec_resitev <= 192; stevec_resitev++)
+            for (int stevec_resitev = 1; stevec_resitev <= 92; stevec_resitev++)
             {
-                int[,] resitev = Postavljaj_kraljice(sahovnica0);
+                int[,] resitev = Postavljaj_kraljice(sahovnica);
 
-                if (resitev[0, 0] == -1) // Preverimo zaustavitveni pogoj, ki se sproži takrat, ko premaknemo kraljico v prvi vrstici s plošče.
+                if (resitev[0, 0] == -1) // Preverimo zaustavitveni pogoj, ki se sproži takrat, ko premaknemo kraljico v prvi vrstici s šahovnice
                 {
                     break;
                 }
@@ -79,7 +37,27 @@ namespace WindowsFormsApp1
                     Izpisi_sahovnico(resitev);
                     Console.Out.WriteLine();
                 }
-                sahovnica0 = resitev; // Nadaljno rešitev dobimo iz predhodnje. :)
+                sahovnica = resitev; // Nadaljno rešitev dobimo iz predhodnje. :)
+            }
+        }
+
+        /// <summary>
+        /// Funkcija, ki poišče vse rešitve problema osmih kraljic in jih shrani v seznam.
+        /// </summary>
+        /// <param name="sahovnica">Na začetku prazna šahovnica.</param>
+        public void PoiščiVseRešitve(int[,] sahovnica)
+        {
+            ShraniŠahovnico(sahovnica, vseRešitve); // Dodamo začetno sliko
+            int steviloRešitev = 1;
+            while (sahovnica[0, 0] != -1) // TODO: Začetni pogoj ne deluje
+            {
+                sahovnica = Postavljaj_kraljice(sahovnica, false);
+                ShraniŠahovnico(sahovnica, vseRešitve); // Dodamo posamezno rešitev
+                if (steviloRešitev >= 92) // Namesto začetnega pogoja. Vemo, da je vseh rešitev 92. 
+                {
+                    break;
+                }
+                steviloRešitev++;
             }
         }
 
@@ -106,12 +84,13 @@ namespace WindowsFormsApp1
         /// </summary>
         /// <param name="sahovnica">Šahovnica.</param>
         /// <param name="kraljica">Polje, na katero želimo postaviti kraljico.</param>
-        /// <returns></returns>
-        public static Boolean Dovoljeno_polje(int[,] sahovnica, int[] kraljica)
+        /// <returns>Seznam s pozicijami napadalnih kraljic. Če take kraljice ni, vrne prazen seznam.</returns>
+        public static List<int[]> Dovoljeno_polje(int[,] sahovnica, int[] kraljica)
         {
-            if (sahovnica[kraljica[0], kraljica[1]] != 0)
+            List<int[]> pozicijaNapadalnihKraljic = new List<int[]>();
+            if (sahovnica[kraljica[0], kraljica[1]] != 0) // Če polje, na katero želimo dati kraljico slučajno ni prosto.
             {
-                return false;
+                pozicijaNapadalnihKraljic.Add(kraljica);
             }
             // 4 smeri premih premikov + 4 smeri diagonalnih premikov
             int[][] premiki = new int[][] { new int[] { 0, -1 }, new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 },
@@ -129,11 +108,11 @@ namespace WindowsFormsApp1
                     j = j + j_vektorja_premika;
                     if (sahovnica[i, j] != 0)
                     {
-                        return false;
+                        pozicijaNapadalnihKraljic.Add(new int[] { i, j });
                     }
                 }
             }
-            return true;
+            return pozicijaNapadalnihKraljic;
         }
 
         /// <summary>
@@ -159,37 +138,79 @@ namespace WindowsFormsApp1
         }
 
         /// <summary>
+        /// Označi napadalne kraljice. Oznaka 2 pomeni, da jih bo grafika pobarvala rdeče.
+        /// </summary>
+        /// <param name="sahovnica"></param>
+        /// <param name="napadalneKraljice"></param>
+        /// <returns>Šahovnico s pobarvanimi napadalnimi kraljicami.</returns>
+        public int[,] označiNapadalneKraljice(int[,] sahovnica, List<int[]> napadalneKraljice)
+        {
+            foreach (int[] napadalnaKraljica in napadalneKraljice)
+            {
+                int iNapadalneKraljice = napadalnaKraljica[0];
+                int jNapadalneKraljice = napadalnaKraljica[1];
+                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 2; // Rdeče obarvamo kraljico, ki napada
+            }
+            return sahovnica;
+        }
+
+        /// <summary>
+        /// Napadalne kraljice ponastavi na 1, jih obarva nazaj v belo barvo. 
+        /// </summary>
+        /// <param name="sahovnica"></param>
+        /// <param name="napadalneKraljice"></param>
+        public void odznačiNapadalneKraljice(int[,] sahovnica, List<int[]> napadalneKraljice)
+        {
+            foreach (int[] napadalnaKraljica in napadalneKraljice) // Ponastavimo napadalne kraljice
+            {
+                int iNapadalneKraljice = napadalnaKraljica[0];
+                int jNapadalneKraljice = napadalnaKraljica[1];
+                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 1;
+            }
+        }
+
+        /// <summary>
         /// Postavlja kraljice in jih premika, dokler ne dobi mesta, na katerem je lahko naslednja kraljica.
         /// Če ne more postaviti kraljice na nobeno mesto v vrstici, pokliče funkcijo za premikanje kraljic.
         /// </summary>
         /// <param name="sahovnica">Šahovnica.</param>
+        /// <param name="shraniKorake">True, kadar iščemo posamezno rešitev, false ko iščemo vse rešitve.</param>
         /// <returns>Šahovnico z eno kraljico več.</returns>
-        public int[,] Postavljaj_kraljice(int[,] sahovnica)
+        public int[,] Postavljaj_kraljice(int[,] sahovnica, Boolean shraniKorake = true)
         {
-            ShraniŠahovnico(sahovnica);
+            if (shraniKorake)
+            {
+                ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+            }
             int n = (int)Math.Sqrt(sahovnica.Length);
             int[] kraljica = Poisci_zadnjo_kraljico(sahovnica);
             int i_zadnje_kraljice = kraljica[0];
             int j_zadnje_kraljice = kraljica[1];
             if (i_zadnje_kraljice == (n - 1))
             {
-                return Premakni_kraljico_za_eno_naprej(sahovnica);
+                return Premakni_kraljico_za_eno_naprej(sahovnica, shraniKorake);
             }
             for (int i = i_zadnje_kraljice + 1; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (Dovoljeno_polje(sahovnica, new int[] { i, j })) // Dobili smo mesto, na katero lahko postavimo kraljico.
+                    List<int[]> napadalneKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
+                    if (napadalneKraljice.Count == 0) // Dobili smo mesto, na katero lahko postavimo kraljico.
                     {
                         sahovnica[i, j] = 1;
-                        ShraniŠahovnico(sahovnica); // Shranimo kopijo poznejšega stanja :)
+                        if (shraniKorake)
+                        {
+                            ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                        }
                         break;
                     }
-                    else // Na želeno polje ne moremo postaviti kraljice. Shranimo korak s ponazoritvijo nedovoljenega polja.
+                    else if (shraniKorake) // Na želeno polje ne moremo postaviti kraljice. Shranimo korak s ponazoritvijo nedovoljenega polja.
                     {
-                        sahovnica[i, j] = 2; // Začasno nastavimo na 2, kar pomeni, da tja kraljice ne moremo postaviti.
-                        ShraniŠahovnico(sahovnica);
-                        sahovnica[i, j] = 0; // Popravimo
+                        označiNapadalneKraljice(sahovnica, napadalneKraljice);
+                        sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
+                        ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                        sahovnica[i, j] = 0; // Ponastavimo
+                        odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
                     }
                 }
                 // Če v trenutni vrstici nismo mogli postaviti kraljice, pokličemo funkcijo za premikanje kraljic.
@@ -204,7 +225,7 @@ namespace WindowsFormsApp1
                 }
                 if (!kraljica_je_v_vrstici)
                 {
-                    return Premakni_kraljico_za_eno_naprej(sahovnica);
+                    return Premakni_kraljico_za_eno_naprej(sahovnica, shraniKorake);
                 }
             }
             // Če kraljice po premikanju ni več v prvi vrstici, smo končali naš algoritem
@@ -230,38 +251,39 @@ namespace WindowsFormsApp1
         /// Premakne kraljico na prvo prosto polje v vrstici.
         /// </summary>
         /// <param name="sahovnica"></param>
+        /// <param name="shraniKorake">Določa, ali shranimo korake posamezne rešitve.</param>
         /// <returns>Šahovnico s premaknjeno kraljico.</returns>
-        public int[,] Premakni_kraljico_za_eno_naprej(int[,] sahovnica)
+        public int[,] Premakni_kraljico_za_eno_naprej(int[,] sahovnica, Boolean shraniKorake)
         {
-            ShraniŠahovnico(sahovnica); // Preden premaknemo, shranimo ---24.6.
+            if (shraniKorake)
+            {
+                ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+            }
             int n = (int)Math.Sqrt(sahovnica.Length);
             int[] kraljica = Poisci_zadnjo_kraljico(sahovnica);
-            int i_zadnje_kraljice = kraljica[0];
+            int i = kraljica[0];
             int j_zadnje_kraljice = kraljica[1];
-            if (i_zadnje_kraljice == -1 && j_zadnje_kraljice == -1)
+            if (i == -1 && j_zadnje_kraljice == -1)
             {
                 Console.Out.Write("Našli smo vse rešitve. :)");
                 return sahovnica;
             }
-            sahovnica[i_zadnje_kraljice, j_zadnje_kraljice] = 0; // Odmaknemo kraljico
+            sahovnica[i, j_zadnje_kraljice] = 0; // Odmaknemo kraljico
             for (int j = j_zadnje_kraljice + 1; j < 8; j++)
             {
-                if (Dovoljeno_polje(sahovnica, new int[] { i_zadnje_kraljice, j }))
+                List<int[]> napadalneKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
+                if (napadalneKraljice.Count == 0) // Nobena kraljice ne napada polja.
                 {
-                    Console.Out.WriteLine("To je prejšnja šahovnica: ");
-                    Izpisi_sahovnico(sahovnica);
-                    //ShraniŠahovnico(sahovnica); // Shranimo
-                    sahovnica[i_zadnje_kraljice, j] = 1; // Dobili smo prosto polje, na katero lahko postavimo kraljico.
-                    //ShraniŠahovnico(sahovnica); // Shranimo kopijo šahovnice :)
-                    Console.Out.WriteLine("To je poznejša šahovnica, ki jo shranimo: ");
-                    Izpisi_sahovnico(sahovnica);
-                    return Postavljaj_kraljice(sahovnica); // Postavljamo naprej kraljice.
+                    sahovnica[i, j] = 1; // Na prosto polje postavimo kraljico.
+                    return Postavljaj_kraljice(sahovnica, shraniKorake); // Postavljamo naprej kraljice.
                 }
-                else
+                else if (shraniKorake)
                 {
-                    sahovnica[i_zadnje_kraljice, j] = 2; // Začasno spremenimo
-                    ShraniŠahovnico(sahovnica);
-                    sahovnica[i_zadnje_kraljice, j] = 0; // Ponastavimo
+                    označiNapadalneKraljice(sahovnica, napadalneKraljice);
+                    sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
+                    ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                    sahovnica[i, j] = 0; // Ponastavimo
+                    odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
                 }
 
             }
@@ -269,7 +291,7 @@ namespace WindowsFormsApp1
             // Zato začnemo premikati kraljico, ki je v zgornji vrstici. 
             //// Še prej shranimo šahovnico, da se premikanje v zgornji vrstici ne zgodi istočasno.
             //ShraniŠahovnico(sahovnica);
-            return Premakni_kraljico_za_eno_naprej(sahovnica);
+            return Premakni_kraljico_za_eno_naprej(sahovnica, shraniKorake);
         }
 
 
@@ -277,7 +299,8 @@ namespace WindowsFormsApp1
         /// Naredimo kopijo šahovnice in jo shranimo v seznam posameznih korakov. 
         /// </summary>
         /// <param name="šahovnica"></param>
-        public void ShraniŠahovnico(int[,] šahovnica)
+        /// <param name="seznamShranjevanja">Določa, v kateri seznam shranimo šahovnico.</param>
+        public void ShraniŠahovnico(int[,] šahovnica, List<int[,]> seznamShranjevanja)
         {
             int[,] kopija =  {{0, 0, 0, 0, 0, 0, 0, 0},
                                 {0, 0, 0, 0, 0, 0, 0, 0},
@@ -295,7 +318,7 @@ namespace WindowsFormsApp1
                     kopija[i, j] = šahovnica[i, j];
                 }
             }
-            korakiPosamezneRešitve.Add(kopija);
+            seznamShranjevanja.Add(kopija);
         }
 
     }
