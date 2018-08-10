@@ -224,7 +224,7 @@ namespace WindowsFormsApp1
                 časovnikKorakiRešitve.Enabled = false;
                 števecKorakovRešitve = 1;
                 spremeniNapisRešitve(zaporednaRešitev);
-                zaporednaRešitev++; // Ker smo prišli do konca
+                zaporednaRešitev++; // Prišli smo do naslednje rešitve
             }
         }
 
@@ -278,7 +278,7 @@ namespace WindowsFormsApp1
             korakiRešitve.Clear();
             opisKorakovRešitve.Clear();
             števecKorakovRešitve = 1;
-            logika.Postavljaj_kraljice(vseRešitve[zaporednaRešitev - 1], true); // Zopet napolni korake rešitve.
+            logika.Postavljaj_kraljice(logika.KopirajŠahovnico(vseRešitve[zaporednaRešitev - 1]), true); // Zopet napolni korake rešitve.
             labelŠteviloKorakov.Text = String.Format("Vseh korakov: {0}", korakiRešitve.Count() - 1);
             labelŠtevecRešitev.Text = String.Format("Iščemo rešitev št. {0}", zaporednaRešitev); // Zaporedna številka rešitve.
             časovnikKorakiRešitve.Enabled = true;
@@ -299,7 +299,7 @@ namespace WindowsFormsApp1
             zaporednaRešitev = (int)numericUpDownSkočiNaRešitev.Value;
             DodajVseKraljice(vseRešitve[zaporednaRešitev]);
             spremeniNapisRešitve(zaporednaRešitev);
-            zaporednaRešitev++;
+            zaporednaRešitev++; // Da lahko časovnika prikažeta naslednjo rešitev
         }
     }
 }

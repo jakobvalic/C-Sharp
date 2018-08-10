@@ -203,7 +203,14 @@ namespace WindowsFormsApp1
                         if (shraniKorake)
                         {
                             ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
-                            opisKorakovPosamezneRešitve.Add("Prosto polje.");
+                            if (i == 7) // Postavili smo kraljico v zadnji vrstici
+                            {
+                                opisKorakovPosamezneRešitve.Add("Dobili smo rešitev. :)");
+                            }
+                            else
+                            {
+                                opisKorakovPosamezneRešitve.Add("Prosto polje.");
+                            }
                         }
                         break;
                     }
@@ -299,12 +306,7 @@ namespace WindowsFormsApp1
         }
 
 
-        /// <summary>
-        /// Naredimo kopijo šahovnice in jo shranimo v seznam posameznih korakov. 
-        /// </summary>
-        /// <param name="šahovnica"></param>
-        /// <param name="seznamShranjevanja">Določa, v kateri seznam shranimo šahovnico.</param>
-        public void ShraniŠahovnico(int[,] šahovnica, List<int[,]> seznamShranjevanja)
+        public int[,] KopirajŠahovnico(int[,] šahovnica)
         {
             int[,] kopija =  {{0, 0, 0, 0, 0, 0, 0, 0},
                                 {0, 0, 0, 0, 0, 0, 0, 0},
@@ -322,6 +324,17 @@ namespace WindowsFormsApp1
                     kopija[i, j] = šahovnica[i, j];
                 }
             }
+            return kopija;
+        }
+
+        /// <summary>
+        /// Naredimo kopijo šahovnice in jo shranimo v seznam posameznih korakov. 
+        /// </summary>
+        /// <param name="šahovnica"></param>
+        /// <param name="seznamShranjevanja">Določa, v kateri seznam shranimo šahovnico.</param>
+        public void ShraniŠahovnico(int[,] šahovnica, List<int[,]> seznamShranjevanja)
+        {
+            int[,] kopija = KopirajŠahovnico(šahovnica);
             seznamShranjevanja.Add(kopija);
         }
 

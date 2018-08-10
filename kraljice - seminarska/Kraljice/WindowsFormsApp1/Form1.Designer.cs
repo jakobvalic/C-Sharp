@@ -110,7 +110,7 @@
             this.gumbNaslednjaRešitevPoKorakih.Name = "gumbNaslednjaRešitevPoKorakih";
             this.gumbNaslednjaRešitevPoKorakih.Size = new System.Drawing.Size(182, 36);
             this.gumbNaslednjaRešitevPoKorakih.TabIndex = 10;
-            this.gumbNaslednjaRešitevPoKorakih.Text = "Naslednja rešitev po korakih";
+            this.gumbNaslednjaRešitevPoKorakih.Text = "Rešitev po korakih";
             this.gumbNaslednjaRešitevPoKorakih.UseVisualStyleBackColor = true;
             this.gumbNaslednjaRešitevPoKorakih.Click += new System.EventHandler(this.gumbNaslednjaRešitevPoKorakih_Click);
             // 
