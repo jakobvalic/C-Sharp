@@ -202,6 +202,10 @@ namespace WindowsFormsApp1
             zaporednaRešitev++;
         }
 
+        /// <summary>
+        /// Spreminja številko zaporedne rešitve.
+        /// </summary>
+        /// <param name="zaporednaRešitev"></param>
         private void spremeniNapisRešitve(int zaporednaRešitev)
         {
             labelŠtevecRešitev.Text = String.Format("Rešitev številka: {0}", zaporednaRešitev.ToString());

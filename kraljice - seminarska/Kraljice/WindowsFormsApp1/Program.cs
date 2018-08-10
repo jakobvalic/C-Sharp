@@ -16,9 +16,6 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
-
-
-            //Izriši_rešitve_v_konzolo(new Logika()); // Izriše preveč rešitev
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

@@ -85,13 +85,13 @@ namespace WindowsFormsApp1
         /// </summary>
         /// <param name="sahovnica">Šahovnica.</param>
         /// <param name="kraljica">Polje, na katero želimo postaviti kraljico.</param>
-        /// <returns>Seznam s pozicijami napadalnih kraljic. Če take kraljice ni, vrne prazen seznam.</returns>
+        /// <returns>Seznam s pozicijami napadajočih kraljic. Če take kraljice ni, vrne prazen seznam.</returns>
         public static List<int[]> Dovoljeno_polje(int[,] sahovnica, int[] kraljica)
         {
-            List<int[]> pozicijaNapadalnihKraljic = new List<int[]>();
+            List<int[]> pozicijaNapadajočihKraljic = new List<int[]>();
             if (sahovnica[kraljica[0], kraljica[1]] != 0) // Če polje, na katero želimo dati kraljico slučajno ni prosto.
             {
-                pozicijaNapadalnihKraljic.Add(kraljica);
+                pozicijaNapadajočihKraljic.Add(kraljica);
             }
             // 4 smeri premih premikov + 4 smeri diagonalnih premikov
             int[][] premiki = new int[][] { new int[] { 0, -1 }, new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { -1, 0 },
@@ -109,11 +109,11 @@ namespace WindowsFormsApp1
                     j = j + j_vektorja_premika;
                     if (sahovnica[i, j] != 0)
                     {
-                        pozicijaNapadalnihKraljic.Add(new int[] { i, j });
+                        pozicijaNapadajočihKraljic.Add(new int[] { i, j });
                     }
                 }
             }
-            return pozicijaNapadalnihKraljic;
+            return pozicijaNapadajočihKraljic;
         }
 
         /// <summary>
@@ -139,34 +139,34 @@ namespace WindowsFormsApp1
         }
 
         /// <summary>
-        /// Označi napadalne kraljice. Oznaka 2 pomeni, da jih bo grafika pobarvala rdeče.
+        /// Označi napadajoče kraljice.
         /// </summary>
         /// <param name="sahovnica"></param>
-        /// <param name="napadalneKraljice"></param>
-        /// <returns>Šahovnico s pobarvanimi napadalnimi kraljicami.</returns>
-        public int[,] označiNapadalneKraljice(int[,] sahovnica, List<int[]> napadalneKraljice)
+        /// <param name="napadajočeKraljice"></param>
+        /// <returns>Šahovnico s pobarvanimi napadajočimi kraljicami.</returns>
+        public int[,] označiNapadajočeKraljice(int[,] sahovnica, List<int[]> napadajočeKraljice)
         {
-            foreach (int[] napadalnaKraljica in napadalneKraljice)
+            foreach (int[] napadajočaKraljica in napadajočeKraljice)
             {
-                int iNapadalneKraljice = napadalnaKraljica[0];
-                int jNapadalneKraljice = napadalnaKraljica[1];
-                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 3; // Rdeče-belo obarvamo kraljico, ki napada
+                int iNapadajočeKraljice = napadajočaKraljica[0];
+                int jNapadajočeKraljice = napadajočaKraljica[1];
+                sahovnica[iNapadajočeKraljice, jNapadajočeKraljice] = 3; // Rdeče-belo obarvamo kraljico, ki napada
             }
             return sahovnica;
         }
 
         /// <summary>
-        /// Napadalne kraljice ponastavi na 1, jih obarva nazaj v belo barvo. 
+        /// Napadajoče kraljice ponastavi na 1, jih obarva nazaj v belo barvo. 
         /// </summary>
-        /// <param name="sahovnica"></param>
-        /// <param name="napadalneKraljice"></param>
-        public void odznačiNapadalneKraljice(int[,] sahovnica, List<int[]> napadalneKraljice)
+        /// <param name="šahovnica"></param>
+        /// <param name="napadajočeKraljice"></param>
+        public void odznačiNapadajočeKraljice(int[,] šahovnica, List<int[]> napadajočeKraljice)
         {
-            foreach (int[] napadalnaKraljica in napadalneKraljice) // Ponastavimo napadalne kraljice
+            foreach (int[] napadajočaKraljica in napadajočeKraljice) // Ponastavimo napadajoče kraljice
             {
-                int iNapadalneKraljice = napadalnaKraljica[0];
-                int jNapadalneKraljice = napadalnaKraljica[1];
-                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 1;
+                int iNapadajočeKraljice = napadajočaKraljica[0];
+                int jNapadajočeKraljice = napadajočaKraljica[1];
+                šahovnica[iNapadajočeKraljice, jNapadajočeKraljice] = 1;
             }
         }
 
@@ -196,8 +196,8 @@ namespace WindowsFormsApp1
             {
                 for (int j = 0; j < n; j++)
                 {
-                    List<int[]> napadalneKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
-                    if (napadalneKraljice.Count == 0) // Dobili smo mesto, na katero lahko postavimo kraljico.
+                    List<int[]> napadajočeKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
+                    if (napadajočeKraljice.Count == 0) // Dobili smo mesto, na katero lahko postavimo kraljico.
                     {
                         sahovnica[i, j] = 1;
                         if (shraniKorake)
@@ -216,12 +216,12 @@ namespace WindowsFormsApp1
                     }
                     else if (shraniKorake) // Na želeno polje ne moremo postaviti kraljice. Shranimo korak s ponazoritvijo nedovoljenega polja.
                     {
-                        označiNapadalneKraljice(sahovnica, napadalneKraljice);
+                        označiNapadajočeKraljice(sahovnica, napadajočeKraljice);
                         sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
                         ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
                         opisKorakovPosamezneRešitve.Add("Napadeno polje.");
                         sahovnica[i, j] = 0; // Ponastavimo
-                        odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
+                        odznačiNapadajočeKraljice(sahovnica, napadajočeKraljice);
                     }
                 }
                 // Če v trenutni vrstici nismo mogli postaviti kraljice, pokličemo funkcijo za premikanje kraljic.
@@ -283,20 +283,20 @@ namespace WindowsFormsApp1
             sahovnica[i, j_zadnje_kraljice] = 0; // Odmaknemo kraljico
             for (int j = j_zadnje_kraljice + 1; j < 8; j++)
             {
-                List<int[]> napadalneKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
-                if (napadalneKraljice.Count == 0) // Nobena kraljice ne napada polja.
+                List<int[]> napadajočeKraljice = Dovoljeno_polje(sahovnica, new int[] { i, j });
+                if (napadajočeKraljice.Count == 0) // Nobena kraljice ne napada polja.
                 {
                     sahovnica[i, j] = 1; // Na prosto polje postavimo kraljico.
                     return Postavljaj_kraljice(sahovnica, shraniKorake); // Postavljamo naprej kraljice.
                 }
                 else if (shraniKorake)
                 {
-                    označiNapadalneKraljice(sahovnica, napadalneKraljice);
+                    označiNapadajočeKraljice(sahovnica, napadajočeKraljice);
                     sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
                     ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
                     opisKorakovPosamezneRešitve.Add("Napadeno polje.");
                     sahovnica[i, j] = 0; // Ponastavimo
-                    odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
+                    odznačiNapadajočeKraljice(sahovnica, napadajočeKraljice);
                 }
 
             }
