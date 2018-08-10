@@ -16,10 +16,12 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         int razmik = 100;
+
         List<PictureBox> vseSlikeKraljic = new List<PictureBox>();
 
         Logika logika;
         List<int[,]> korakiRešitve;
+        List<string> opisKorakovRešitve;
         List<int[,]> vseRešitve;
 
         int zaporednaRešitev = 1;
@@ -40,9 +42,12 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             logika = new Logika();
-            korakiRešitve = logika.korakiPosamezneRešitve; // Povežemo spremenljivko iz logike.
+            korakiRešitve = logika.korakiPosamezneRešitve; // Povežemo s spremenljivko iz logike.
+            opisKorakovRešitve = logika.opisKorakovPosamezneRešitve;
             logika.PoiščiVseRešitve(SAHOVNICA); // Napolnimo seznam vseh rešitev.
             vseRešitve = logika.vseRešitve;
+
+            časovnikVseRešitve.Enabled = true;
         }
 
 
@@ -104,34 +109,35 @@ namespace WindowsFormsApp1
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (sahovnica[i, j] == 1) // Navadna kraljica
+                    int vrstaKraljice = sahovnica[i, j];
+                    if (vrstaKraljice != 0)
                     {
-                        vseSlikeKraljic.Add(DodajKraljico(i, j));
-                    }
-                    else if (sahovnica[i, j] == 2) // Napadalna ali napadena kraljica -> rdeče obarvana
-                    {
-                        vseSlikeKraljic.Add(DodajKraljico(i, j, true));
+                        vseSlikeKraljic.Add(DodajKraljico(i, j, vrstaKraljice));
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Doda posamezno kraljico na ploščo. Vrne okvir slike, da ga lahko shranimo v seznam 'vseSlikeKraljic'.
+        /// Doda posamezno kraljico na ploščo. Ločimo 3 vrste kraljic: navadno, napadeno in napadajočo.
         /// </summary>
         /// <param name="vrstica"></param>
         /// <param name="stolpec"></param>
-        /// <returns></returns>
-        private PictureBox DodajKraljico(int vrstica, int stolpec, bool rdečaKraljica = false)
+        /// <returns>Vrne okvir slike, da ga lahko shranimo v seznam 'vseSlikeKraljic'.</returns>
+        private PictureBox DodajKraljico(int vrstica, int stolpec, int vrstaKraljice)
         {
             Image slika;
-            if (rdečaKraljica)
+            if (vrstaKraljice == 1) // Navadna, belo obarvana kraljica.
+            {
+                slika = Properties.Resources.kraljica_bela;
+            }
+            else if (vrstaKraljice == 2) // Napadena, rdeče obarvana kraljica.
             {
                 slika = Properties.Resources.kraljica_rdeca;
             }
-            else
+            else // Napadajoča, belo-rdeče obarvana kraljica.
             {
-                slika = Properties.Resources.kraljica_bela;
+                slika = Properties.Resources.kraljica_bela_rdeca;
             }
 
             PictureBox okvirSlike = new PictureBox
@@ -185,16 +191,20 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void časovnikVseRešitve_Tick(object sender, EventArgs e)
         {
+            if (zaporednaRešitev >= vseRešitve.Count()) // Na zaslonu ohranimo zadnjo rešitev.
+            {
+                zaporednaRešitev = 1; // Začnemo gledati rešitve znova, od začetka.
+            }
             OdstraniVseKraljice();
             časovnikKorakiRešitve.Enabled = false;
             DodajVseKraljice(vseRešitve[zaporednaRešitev]);
-            labelŠtevecRešitev.Text = zaporednaRešitev.ToString(); // Zaporedna številka rešitve.      
+            spremeniNapisRešitve(zaporednaRešitev);
             zaporednaRešitev++;
-            if (zaporednaRešitev >= vseRešitve.Count()) // Na zaslonu ohranimo zadnjo rešitev.
-            {
-                časovnikVseRešitve.Enabled = false;
-                zaporednaRešitev = 1; // Začnemo gledati rešitve znova, od začetka.
-            }
+        }
+
+        private void spremeniNapisRešitve(int zaporednaRešitev)
+        {
+            labelŠtevecRešitev.Text = String.Format("Rešitev številka: {0}", zaporednaRešitev.ToString());
         }
 
         /// <summary>
@@ -205,14 +215,15 @@ namespace WindowsFormsApp1
         private void časovnikKorakiRešitve_Tick(object sender, EventArgs e)
         {
             OdstraniVseKraljice();
-            DodajVseKraljice(korakiRešitve[števecKorakovRešitve]);
-            labelStevecKorakov.Text = String.Format("Korak številka: {0}", števecKorakovRešitve);
+            DodajVseKraljice(korakiRešitve[števecKorakovRešitve]); // Dodamo kraljice na šahovnico
+            labelOpisKoraka.Text = opisKorakovRešitve[števecKorakovRešitve]; // Opis posameznega koraka rešitve
+            labelŠtevecKorakov.Text = String.Format("Korak številka: {0}", števecKorakovRešitve);
             števecKorakovRešitve++;
             if (števecKorakovRešitve >= korakiRešitve.Count())
             {
                 časovnikKorakiRešitve.Enabled = false;
                 števecKorakovRešitve = 1;
-                labelŠtevecRešitev.Text = String.Format("{0}", (zaporednaRešitev));
+                spremeniNapisRešitve(zaporednaRešitev);
                 zaporednaRešitev++; // Ker smo prišli do konca
             }
         }
@@ -225,8 +236,28 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void gumbUstavi_Click(object sender, EventArgs e)
         {
-            časovnikVseRešitve.Enabled = false;
-            časovnikKorakiRešitve.Enabled = false;
+            bool časovnikaUstavljena = !časovnikVseRešitve.Enabled && !časovnikKorakiRešitve.Enabled;
+            if (!časovnikaUstavljena) // Ustavimo oba časovnika in ponastavimo vrednost napisov
+            {
+                časovnikVseRešitve.Enabled = false;
+                časovnikKorakiRešitve.Enabled = false;
+                gumbUstaviZacni.Text = "Naslednja reštiev";
+            }
+            else // Poženemo časovnik za prikaz naslednje rešitve.
+            {
+                časovnikVseRešitve_Tick(sender, e);
+                časovnikVseRešitve.Enabled = true;
+                časovnikKorakiRešitve.Enabled = false;
+                gumbUstaviZacni.Text = "Ustavi";
+            }
+            ponastaviOznakeKorakov();
+        }
+
+        private void ponastaviOznakeKorakov()
+        {
+            labelŠteviloKorakov.Text = "/";
+            labelŠtevecKorakov.Text = "/";
+            labelOpisKoraka.Text = "/";
         }
 
         /// <summary>
@@ -236,6 +267,7 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void gumbNaslednjaRešitevPoKorakih_Click(object sender, EventArgs e)
         {
+            gumbUstaviZacni.Text = "Ustavi";
             časovnikVseRešitve.Enabled = false;
             // zaporednaRešitev nam da začetno pozicijo
             if (zaporednaRešitev >= vseRešitve.Count)
@@ -244,10 +276,11 @@ namespace WindowsFormsApp1
             }
             // Sedaj logiko povprašamo za korake rešitve. Prej pobrišemo stare korake.
             korakiRešitve.Clear();
+            opisKorakovRešitve.Clear();
             števecKorakovRešitve = 1;
             logika.Postavljaj_kraljice(vseRešitve[zaporednaRešitev - 1], true); // Zopet napolni korake rešitve.
-            labelŠteviloKorakov.Text = String.Format("Raziskujemo rešitev številka {0}. Število vseh korakov do naslednje rešitve je {1}.", zaporednaRešitev, korakiRešitve.Count() - 1);
-            labelŠtevecRešitev.Text = String.Format("Nekje med {0} in {1}.", zaporednaRešitev - 1, zaporednaRešitev); // Zaporedna številka rešitve.
+            labelŠteviloKorakov.Text = String.Format("Vseh korakov: {0}", korakiRešitve.Count() - 1);
+            labelŠtevecRešitev.Text = String.Format("Iščemo rešitev št. {0}", zaporednaRešitev); // Zaporedna številka rešitve.
             časovnikKorakiRešitve.Enabled = true;
         }
 
@@ -258,12 +291,14 @@ namespace WindowsFormsApp1
         /// <param name="e"></param>
         private void gumbSkočiNaRešitev_Click(object sender, EventArgs e)
         {
+            gumbUstaviZacni.Text = "Naslednja rešitev";
+            ponastaviOznakeKorakov();
             časovnikVseRešitve.Enabled = false;
             časovnikKorakiRešitve.Enabled = false;
             OdstraniVseKraljice();
             zaporednaRešitev = (int)numericUpDownSkočiNaRešitev.Value;
             DodajVseKraljice(vseRešitve[zaporednaRešitev]);
-            labelŠtevecRešitev.Text = zaporednaRešitev.ToString(); // Zaporedna številka rešitve.
+            spremeniNapisRešitve(zaporednaRešitev);
             zaporednaRešitev++;
         }
     }

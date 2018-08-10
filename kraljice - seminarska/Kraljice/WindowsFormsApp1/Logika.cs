@@ -10,7 +10,8 @@ namespace WindowsFormsApp1
     public class Logika
     {
 
-        public List<int[,]> korakiPosamezneRešitve = new List<int[,]>(); // V ta seznam shranimo korake posamezne rešitve. 
+        public List<int[,]> korakiPosamezneRešitve = new List<int[,]>(); // V ta seznam shranimo korake posamezne rešitve.
+        public List<string> opisKorakovPosamezneRešitve = new List<string>(); // Shranjujemo opis posameznega koraka.
         public List<int[,]> vseRešitve = new List<int[,]>();
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace WindowsFormsApp1
             {
                 int iNapadalneKraljice = napadalnaKraljica[0];
                 int jNapadalneKraljice = napadalnaKraljica[1];
-                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 2; // Rdeče obarvamo kraljico, ki napada
+                sahovnica[iNapadalneKraljice, jNapadalneKraljice] = 3; // Rdeče-belo obarvamo kraljico, ki napada
             }
             return sahovnica;
         }
@@ -181,6 +182,7 @@ namespace WindowsFormsApp1
             if (shraniKorake)
             {
                 ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                opisKorakovPosamezneRešitve.Add("Prosto polje.");
             }
             int n = (int)Math.Sqrt(sahovnica.Length);
             int[] kraljica = Poisci_zadnjo_kraljico(sahovnica);
@@ -201,6 +203,7 @@ namespace WindowsFormsApp1
                         if (shraniKorake)
                         {
                             ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                            opisKorakovPosamezneRešitve.Add("Prosto polje.");
                         }
                         break;
                     }
@@ -209,6 +212,7 @@ namespace WindowsFormsApp1
                         označiNapadalneKraljice(sahovnica, napadalneKraljice);
                         sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
                         ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                        opisKorakovPosamezneRešitve.Add("Napadeno polje.");
                         sahovnica[i, j] = 0; // Ponastavimo
                         odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
                     }
@@ -258,6 +262,7 @@ namespace WindowsFormsApp1
             if (shraniKorake)
             {
                 ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                opisKorakovPosamezneRešitve.Add("Popravimo zgornjo vrsto.");
             }
             int n = (int)Math.Sqrt(sahovnica.Length);
             int[] kraljica = Poisci_zadnjo_kraljico(sahovnica);
@@ -282,6 +287,7 @@ namespace WindowsFormsApp1
                     označiNapadalneKraljice(sahovnica, napadalneKraljice);
                     sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.
                     ShraniŠahovnico(sahovnica, korakiPosamezneRešitve);
+                    opisKorakovPosamezneRešitve.Add("Napadeno polje.");
                     sahovnica[i, j] = 0; // Ponastavimo
                     odznačiNapadalneKraljice(sahovnica, napadalneKraljice);
                 }
@@ -289,8 +295,6 @@ namespace WindowsFormsApp1
             }
             // Zanka se je iztekla in v vrstici nismo dobili polja, na katerega bi lahko postavili kraljico. 
             // Zato začnemo premikati kraljico, ki je v zgornji vrstici. 
-            //// Še prej shranimo šahovnico, da se premikanje v zgornji vrstici ne zgodi istočasno.
-            //ShraniŠahovnico(sahovnica);
             return Premakni_kraljico_za_eno_naprej(sahovnica, shraniKorake);
         }
 

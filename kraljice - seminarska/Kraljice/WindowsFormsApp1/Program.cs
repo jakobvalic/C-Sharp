@@ -38,7 +38,7 @@ namespace WindowsFormsApp1
                                 {0, 0, 0, 0, 0, 0, 0, 0},
                                 {0, 0, 0, 0, 0, 0, 0, 0} };
 
-            for (int stevec_resitev = 1; stevec_resitev <= 192; stevec_resitev++)
+            for (int stevec_resitev = 1; stevec_resitev <= 92; stevec_resitev++)
             {
                 logika.Krovna_funkcija_konzola(sahovnica0);
             }
