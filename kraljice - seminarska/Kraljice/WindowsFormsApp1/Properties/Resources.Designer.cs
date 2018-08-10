@@ -73,6 +73,16 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kraljica_bela_rdeca {
+            get {
+                object obj = ResourceManager.GetObject("kraljica_bela_rdeca", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap kraljica_rdeca {
             get {
                 object obj = ResourceManager.GetObject("kraljica_rdeca", resourceCulture);
