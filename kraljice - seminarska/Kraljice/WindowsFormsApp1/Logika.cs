@@ -210,11 +210,12 @@ namespace WindowsFormsApp1
                             else
                             {
                                 opisKorakovPosamezneRešitve.Add("Prosto polje.");
-                            }
+                            }   
                         }
                         break;
                     }
-                    else if (shraniKorake) // Na želeno polje ne moremo postaviti kraljice. Shranimo korak s ponazoritvijo nedovoljenega polja.
+                    else if (shraniKorake) // Na želeno polje ne moremo postaviti kraljice. 
+                                           //Shranimo korak s ponazoritvijo nedovoljenega polja.
                     {
                         označiNapadajočeKraljice(sahovnica, napadajočeKraljice);
                         sahovnica[i, j] = 2; // Premikajočo kraljico obarvamo rdeče.

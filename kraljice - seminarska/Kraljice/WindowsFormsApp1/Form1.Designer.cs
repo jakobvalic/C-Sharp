@@ -55,15 +55,15 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(1078, 109);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDown1.Location = new System.Drawing.Point(1437, 134);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDown1.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(39, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(52, 22);
             this.numericUpDown1.TabIndex = 3;
             this.numericUpDown1.Value = new decimal(new int[] {
             10,
@@ -75,20 +75,18 @@
             // labelŠtevecRešitev
             // 
             this.labelŠtevecRešitev.AutoSize = true;
-            this.labelŠtevecRešitev.Location = new System.Drawing.Point(976, 413);
-            this.labelŠtevecRešitev.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelŠtevecRešitev.Location = new System.Drawing.Point(1301, 508);
             this.labelŠtevecRešitev.Name = "labelŠtevecRešitev";
-            this.labelŠtevecRešitev.Size = new System.Drawing.Size(12, 13);
+            this.labelŠtevecRešitev.Size = new System.Drawing.Size(12, 17);
             this.labelŠtevecRešitev.TabIndex = 5;
             this.labelŠtevecRešitev.Text = "/";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(976, 111);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(1301, 137);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 13);
+            this.label3.Size = new System.Drawing.Size(132, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Hitrost (desetinke): ";
             // 
@@ -96,19 +94,18 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(338, 30);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Location = new System.Drawing.Point(451, 37);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(214, 20);
+            this.label4.Size = new System.Drawing.Size(267, 25);
             this.label4.TabIndex = 9;
             this.label4.Text = "PROBLEM OSMIH KRALJIC";
             // 
             // gumbNaslednjaRešitevPoKorakih
             // 
-            this.gumbNaslednjaRešitevPoKorakih.Location = new System.Drawing.Point(979, 502);
-            this.gumbNaslednjaRešitevPoKorakih.Margin = new System.Windows.Forms.Padding(2);
+            this.gumbNaslednjaRešitevPoKorakih.Location = new System.Drawing.Point(1305, 618);
+            this.gumbNaslednjaRešitevPoKorakih.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gumbNaslednjaRešitevPoKorakih.Name = "gumbNaslednjaRešitevPoKorakih";
-            this.gumbNaslednjaRešitevPoKorakih.Size = new System.Drawing.Size(182, 36);
+            this.gumbNaslednjaRešitevPoKorakih.Size = new System.Drawing.Size(243, 44);
             this.gumbNaslednjaRešitevPoKorakih.TabIndex = 10;
             this.gumbNaslednjaRešitevPoKorakih.Text = "Rešitev po korakih";
             this.gumbNaslednjaRešitevPoKorakih.UseVisualStyleBackColor = true;
@@ -117,10 +114,9 @@
             // labelŠteviloKorakov
             // 
             this.labelŠteviloKorakov.AutoSize = true;
-            this.labelŠteviloKorakov.Location = new System.Drawing.Point(976, 575);
-            this.labelŠteviloKorakov.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelŠteviloKorakov.Location = new System.Drawing.Point(1301, 708);
             this.labelŠteviloKorakov.Name = "labelŠteviloKorakov";
-            this.labelŠteviloKorakov.Size = new System.Drawing.Size(12, 13);
+            this.labelŠteviloKorakov.Size = new System.Drawing.Size(12, 17);
             this.labelŠteviloKorakov.TabIndex = 12;
             this.labelŠteviloKorakov.Text = "/";
             // 
@@ -131,10 +127,10 @@
             // 
             // gumbUstaviZacni
             // 
-            this.gumbUstaviZacni.Location = new System.Drawing.Point(977, 324);
-            this.gumbUstaviZacni.Margin = new System.Windows.Forms.Padding(2);
+            this.gumbUstaviZacni.Location = new System.Drawing.Point(1303, 399);
+            this.gumbUstaviZacni.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gumbUstaviZacni.Name = "gumbUstaviZacni";
-            this.gumbUstaviZacni.Size = new System.Drawing.Size(104, 33);
+            this.gumbUstaviZacni.Size = new System.Drawing.Size(139, 41);
             this.gumbUstaviZacni.TabIndex = 13;
             this.gumbUstaviZacni.Text = "Ustavi";
             this.gumbUstaviZacni.UseVisualStyleBackColor = true;
@@ -143,27 +139,25 @@
             // label6
             // 
             this.label6.Location = new System.Drawing.Point(0, 0);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 19);
+            this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 0;
             // 
             // labelŠtevecKorakov
             // 
             this.labelŠtevecKorakov.AutoSize = true;
-            this.labelŠtevecKorakov.Location = new System.Drawing.Point(976, 613);
-            this.labelŠtevecKorakov.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelŠtevecKorakov.Location = new System.Drawing.Point(1301, 754);
             this.labelŠtevecKorakov.Name = "labelŠtevecKorakov";
-            this.labelŠtevecKorakov.Size = new System.Drawing.Size(12, 13);
+            this.labelŠtevecKorakov.Size = new System.Drawing.Size(12, 17);
             this.labelŠtevecKorakov.TabIndex = 16;
             this.labelŠtevecKorakov.Text = "/";
             // 
             // gumbSkočiNaRešitev
             // 
-            this.gumbSkočiNaRešitev.Location = new System.Drawing.Point(977, 261);
-            this.gumbSkočiNaRešitev.Margin = new System.Windows.Forms.Padding(2);
+            this.gumbSkočiNaRešitev.Location = new System.Drawing.Point(1303, 321);
+            this.gumbSkočiNaRešitev.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gumbSkočiNaRešitev.Name = "gumbSkočiNaRešitev";
-            this.gumbSkočiNaRešitev.Size = new System.Drawing.Size(104, 33);
+            this.gumbSkočiNaRešitev.Size = new System.Drawing.Size(139, 41);
             this.gumbSkočiNaRešitev.TabIndex = 17;
             this.gumbSkočiNaRešitev.Text = "Skoči na rešitev";
             this.gumbSkočiNaRešitev.UseVisualStyleBackColor = true;
@@ -171,8 +165,8 @@
             // 
             // numericUpDownSkočiNaRešitev
             // 
-            this.numericUpDownSkočiNaRešitev.Location = new System.Drawing.Point(1100, 269);
-            this.numericUpDownSkočiNaRešitev.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownSkočiNaRešitev.Location = new System.Drawing.Point(1467, 331);
+            this.numericUpDownSkočiNaRešitev.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDownSkočiNaRešitev.Maximum = new decimal(new int[] {
             92,
             0,
@@ -184,7 +178,7 @@
             0,
             0});
             this.numericUpDownSkočiNaRešitev.Name = "numericUpDownSkočiNaRešitev";
-            this.numericUpDownSkočiNaRešitev.Size = new System.Drawing.Size(39, 20);
+            this.numericUpDownSkočiNaRešitev.Size = new System.Drawing.Size(52, 22);
             this.numericUpDownSkočiNaRešitev.TabIndex = 18;
             this.numericUpDownSkočiNaRešitev.Value = new decimal(new int[] {
             1,
@@ -195,18 +189,17 @@
             // labelOpisKoraka
             // 
             this.labelOpisKoraka.AutoSize = true;
-            this.labelOpisKoraka.Location = new System.Drawing.Point(976, 650);
-            this.labelOpisKoraka.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelOpisKoraka.Location = new System.Drawing.Point(1301, 800);
             this.labelOpisKoraka.Name = "labelOpisKoraka";
-            this.labelOpisKoraka.Size = new System.Drawing.Size(12, 13);
+            this.labelOpisKoraka.Size = new System.Drawing.Size(12, 17);
             this.labelOpisKoraka.TabIndex = 19;
             this.labelOpisKoraka.Text = "/";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1358, 959);
+            this.ClientSize = new System.Drawing.Size(1811, 1047);
             this.Controls.Add(this.labelOpisKoraka);
             this.Controls.Add(this.numericUpDownSkočiNaRešitev);
             this.Controls.Add(this.gumbSkočiNaRešitev);
@@ -219,7 +212,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.labelŠtevecRešitev);
             this.Controls.Add(this.numericUpDown1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Problem 8-ih kraljic";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
